@@ -1,7 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-
 from textwrap import dedent
 from operator import add
 
@@ -43,8 +39,9 @@ class LinearTransformer:
         n2, *_ = self.o.shape
         if n != n2:
             raise ValueError(dedent(
-                    """\
-                    The shapes of hist and edges do not match each others!"""))
+                """\
+                The shapes of hist and edges do not match each others!\
+                """))
 
     @property
     def mat(self):
@@ -59,10 +56,18 @@ class LinearTransformer:
         return self.__o
 
     def transform(self, *x):
-        return tensordot(self.mat, tuple(x1-x0 for x0, x1 in zip(self.o, x)), axes=((1,), (0,)))
+        return tensordot(
+            self.mat,
+            tuple(x1-x0 for x0, x1 in zip(self.o, x)),
+            axes=((1,), (0,)),
+        )
 
     def invert(self, *x):
-        return (x1+x0 for x0, x1 in zip(self.o, tensordot(self.inv, x, axes=((1,), (0,)))))
+        return (
+            x1 + x0
+            for x0, x1
+            in zip(self.o, tensordot(self.inv, x, axes=((1,), (0,))))
+        )
 
     def __call__(self, *args):
         return self.transform(*args)

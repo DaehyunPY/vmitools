@@ -1,7 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-
 from sympy import symbols, lambdify, sqrt, asin
 from numpy import zeros, array, matrix, append
 
@@ -17,6 +13,8 @@ def __init_basis():
     expr4 = expr3.subs(r, r1)-expr3.subs(r, r0)
     func4 = lambdify((r0, r1), expr4, 'numpy')
     return func2, func4
+
+
 __f2, __f4 = __init_basis()
 
 
@@ -25,7 +23,7 @@ def __get_basis(edges):
     mat = zeros((n, n))  # shape=(x,r)
     for i in range(n):
         mat[:i, i] = __f2(
-                edges[:i], edges[1:i+1], edges[i], edges[i+1])
+            edges[:i], edges[1:i+1], edges[i], edges[i+1])
         mat[i, i] = __f4(edges[i], edges[i+1])
     return matrix(mat)
 

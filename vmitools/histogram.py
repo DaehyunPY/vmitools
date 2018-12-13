@@ -1,15 +1,7 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-
 from numpy import array, arange, zeros, meshgrid, outer
-from cytoolz import identity, curry
+from cytoolz import curry
 from scipy.interpolate import UnivariateSpline, RectBivariateSpline
-try:
-    from numba import jit
-except ImportError:
-    print("Module 'numba' is not imported!")
-    jit = identity
+from numba import jit
 
 
 @jit
@@ -34,7 +26,8 @@ class Hist1d:
         self.__edges = array(edges, dtype='float64')
 
         if n != len(self.edges)-1:
-            raise ValueError('The shapes of hist and edges do not match each others!')
+            raise ValueError(
+                'The shapes of hist and edges do not match each others!')
 
     @property
     def copy(self):
@@ -70,7 +63,7 @@ class Hist1d:
 
     @property
     def intensity(self):
-        return UnivariateSpline(self.centers, self.hist/self.diffs) 
+        return UnivariateSpline(self.centers, self.hist/self.diffs)
 
     @intensity.setter
     def intensity(self, i):
@@ -95,8 +88,12 @@ class Hist2d:
         def fst(*arr):
             ret, *_ = arr
             return ret
-        if (nx != fst(*self.x_edges.shape)-1) or (ny != fst(*self.y_edges.shape)-1):
-            raise ValueError('The shapes of hist and edges do not match each others!')
+        if (
+            nx != fst(*self.x_edges.shape)-1
+            or ny != fst(*self.y_edges.shape)-1
+        ):
+            raise ValueError(
+                'The shapes of hist and edges do not match each others!')
 
     @property
     def copy(self):
@@ -165,4 +162,6 @@ class Hist2d:
     @property
     def meshed_yxz(self):
         return self.y_edges, self.x_edges, self.hist
+
+
 Hist = Hist2d

@@ -1,7 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-
 from numpy import array, append
 from sympy import symbols, legendre, lambdify, integrate, cos
 from cytoolz import memoize
@@ -51,7 +47,11 @@ def finite_legendre_transform_in_theta(hist, edges, n):
         return hist[idx], append(lefts[idx], rights[idx][-1])
 
     coeff_neg, basis_neg = __finite_legendre_transform_in_theta(
-            *sliced(idx), n=n)
+        *sliced(idx),
+        n=n,
+    )
     coeff_pos, basis_pos = __finite_legendre_transform_in_theta(
-            *sliced(~idx), n=n)
+        *sliced(~idx),
+        n=n,
+    )
     return coeff_neg, -coeff_pos, append(basis_neg, basis_pos, axis=1)

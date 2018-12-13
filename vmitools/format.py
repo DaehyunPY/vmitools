@@ -1,12 +1,9 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-
+from typing import Sequence, Mapping, Iterator, Any
 from textwrap import dedent
+
 from cytoolz import reduce, concat, map, curry, compose, memoize, identity
 from numpy import fromiter
 from h5py import File
-from typing import Sequence, Mapping, Iterator, Any
 
 
 @curry
@@ -161,12 +158,13 @@ try:
         def __getitem__(self, key: str) -> iter:
             if key not in self.map:
                 raise ValueError(dedent(
-                        """\
-                        Key '{}' is invalid!
-                        Valid keys: {}
-                        """.format(key, reduce(lambda k1, k2: '{}, {}'.format(k1, k2),
-                                               map(lambda k: "'{}'".format(k),
-                                                   self.map)))))
+                    """\
+                    Key '{}' is invalid!
+                    Valid keys: {}\
+                    """.format(
+                        key, reduce(lambda k1, k2: '{}, {}'.format(k1, k2),
+                                    map(lambda k: "'{}'".format(k),
+                                        self.map)))))
             ref = self.map[key]
             if 'api' not in ref:
                 ref['api'] = 'dbpy'  # default api
@@ -182,11 +180,11 @@ try:
                 id = ref['id']
                 if api == 'dbpy':
                     self.cache[key] = fromiter(
-                            read_syncdatalist_float(id,
-                                                    self.hi_tag,
-                                                    tuple(map(int,
-                                                              self.low_tags))),
-                            'float')
+                        read_syncdatalist_float(id,
+                                                self.hi_tag,
+                                                tuple(map(int,
+                                                          self.low_tags))),
+                        'float')
                 if api == 'stpy':
                     self.cache[key] = StorageWrapper(*map(int, self.runs),
                                                      beamline=self.beamline,
@@ -196,7 +194,8 @@ try:
                 print('Loaded!')
 
             data = self.cache[key]
-            deco = ref['deco'] if hasattr(ref['deco'], '__call__') else eval(ref['deco'])
+            deco = ref['deco'] if hasattr(
+                ref['deco'], '__call__') else eval(ref['deco'])
             if api == 'dbpy':
                 return map(deco, data)
             if api == 'stpy':

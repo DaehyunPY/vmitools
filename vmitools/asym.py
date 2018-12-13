@@ -1,16 +1,8 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-
 from sympy import symbols, legendre, lambdify
-from cytoolz import memoize, identity
+from cytoolz import memoize
 from numpy import vectorize, cos, pi
 from numpy.polynomial.legendre import legval
-try:
-    from numba import jit
-except ImportError:
-    print("Module 'numba' is not imported!")
-    jit = identity
+from numba import jit
 
 
 def __init_halfsummed_pn():
@@ -33,6 +25,8 @@ def __init_halfsummed_pn():
         else:
             raise ValueError("Par 'region' have to be 'top' or 'btm'!")
     return summed
+
+
 halfsummed_pn = __init_halfsummed_pn()
 
 
@@ -49,6 +43,8 @@ def full_asym(*betas):  # from 0th term
     diffed = (top-btm).dot(tail)
 
     return diffed/summed
+
+
 asym = full_asym
 
 

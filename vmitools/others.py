@@ -1,14 +1,6 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-
-from cytoolz import identity, reduce
+from cytoolz import reduce
 from numpy import logical_or, average
-try:
-    from numba import jit
-except ImportError:
-    print("Module 'numba' is not imported!")
-    jit = identity
+from numba import jit
 
 
 @jit

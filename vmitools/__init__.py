@@ -1,7 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-
 from .format import FermiReader, SaclaReader
 from .coordinate import convert_xy2rth, convert_rth2xy, convert_df_xy2rth, convert_df_rth2xy
 from .histogram import Hist1d, Hist2d, Hist

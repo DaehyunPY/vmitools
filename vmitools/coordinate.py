@@ -1,14 +1,5 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
-
 from numpy import sin, cos, arctan2
-from cytoolz import identity
-try:
-    from numba import jit
-except ImportError:
-    print("Module 'numba' is not imported!")
-    jit = identity
+from numba import jit
 
 
 @jit
