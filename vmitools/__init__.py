@@ -1,6 +1,7 @@
 from .abel import *
 from .legendre import *
 from .transpose import *
+from .mat import *
 
 
 __all__ = [
@@ -11,4 +12,7 @@ __all__ = [
     'transpose_linearly',
     'transpose_to_drdomega',
     'transpose_to_drdth',
+    'mrot',
+    'mhorshear',
+    'msqueeze',
 ]
