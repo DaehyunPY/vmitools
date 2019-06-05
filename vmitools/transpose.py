@@ -27,10 +27,10 @@ __all__ = [
 
 
 def interp(
-    hist: ndarray,
-    xedges: ndarray,
-    yedges: ndarray,
-) -> Callable[[ndarray, ndarray], ndarray]:
+        hist: ndarray,
+        xedges: ndarray,
+        yedges: ndarray,
+    ) -> Callable[[ndarray, ndarray], ndarray]:
     x = (xedges[1:] + xedges[:-1]) / 2
     y = (yedges[1:] + yedges[:-1]) / 2
     dx = xedges[1:] - xedges[:-1]
@@ -40,10 +40,10 @@ def interp(
 
 
 def tohist(
-    f: Callable[[ndarray, ndarray], ndarray],
-    xedges: ndarray,
-    yedges: ndarray,
-) -> ndarray:
+        f: Callable[[ndarray, ndarray], ndarray],
+        xedges: ndarray,
+        yedges: ndarray,
+    ) -> ndarray:
     x, y = meshgrid(
         (xedges[1:] + xedges[:-1]) / 2,
         (yedges[1:] + yedges[:-1]) / 2,
@@ -55,11 +55,11 @@ def tohist(
 
 
 def transpose_linearly(
-    cart: Callable[..., ndarray],
-    mat: ndarray,
-    x0: Optional[ndarray] = None,
-    u0: Optional[ndarray] = None,
-) -> Callable[..., ndarray]:
+        cart: Callable[..., ndarray],
+        mat: ndarray,
+        x0: Optional[ndarray] = None,
+        u0: Optional[ndarray] = None,
+    ) -> Callable[..., ndarray]:
     """
     Transpose a function f: x -> intensity, linearly,
     to a function g: u -> intensity, which is related by:
@@ -90,8 +90,8 @@ def transpose_linearly(
 
 
 def transpose_to_drdomega(
-    cart: Callable[[ndarray, ndarray], ndarray],
-) -> Callable[[ndarray, ndarray], ndarray]:
+        cart: Callable[[ndarray, ndarray], ndarray],
+    ) -> Callable[[ndarray, ndarray], ndarray]:
     """
     Transpose a function f: (z, rho) -> intensity, of which volume dvol
     is expressed as:
@@ -110,8 +110,8 @@ def transpose_to_drdomega(
 
 
 def transpose_to_drdth(
-    cart: Callable[[ndarray, ndarray], ndarray],
-) -> Callable[[ndarray, ndarray], ndarray]:
+        cart: Callable[[ndarray, ndarray], ndarray],
+    ) -> Callable[[ndarray, ndarray], ndarray]:
     """
     Transpose a function f: (z, rho) -> intensity, of which volume dvol
     is expressed as:
