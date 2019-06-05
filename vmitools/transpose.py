@@ -10,8 +10,10 @@ Transpose to other spaces. Here, we use below annotations:
 """
 from typing import Callable, Optional
 from functools import partial
+from warnings import warn
 
 from numpy import ndarray, sin, cos, abs, pi, meshgrid, array, einsum, stack
+from numpy.linalg import inv
 from scipy.interpolate import RectBivariateSpline
 
 
@@ -62,7 +64,7 @@ def transpose_linearly(
     Transpose a function f: x -> intensity, linearly,
     to a function g: u -> intensity, which is related by:
         g(u) = f(x),
-        x - x0 = mat @ (u - u0).
+        u - u0 = mat @ (x - x0).
     :param cart:
     :param mat:
     :param x0:
@@ -73,11 +75,16 @@ def transpose_linearly(
         u0 = array(0)[None]
     if x0 is None:
         x0 = array(0)[None]
+    minv = inv(mat)
+    warn(
+        "The behavior of this function is changed after 201906.0!",
+        UserWarning,
+    )
 
     def ret(*u: ndarray) -> ndarray:
         n = len(u)
         shape = slice(None), *(n * [None])
-        x = einsum("ij,j...->i...", mat, (stack(u) - u0[shape]))
+        x = einsum("ij,j...->i...", minv, stack(u) - u0[shape])
         return cart(*(x + x0[shape]))
     return ret
 
