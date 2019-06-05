@@ -4,6 +4,8 @@ from .transpose import *
 from .mat import *
 
 
+__version__ = '201906.0'
+
 __all__ = [
     'abel_inverse',
     'finite_legendre_transform_in_theta',

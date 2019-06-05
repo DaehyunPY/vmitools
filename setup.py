@@ -1,9 +1,11 @@
 from setuptools import setup
 
+from vmitools import __version__
+
 
 setup(
     name='vmitools',
-    version='v201812.1',
+    version=__version__,
     author='Daehyun You',
     author_email='daehyun@dc.tohoku.ac.jp',
     url='https://github.com/DaehyunPY/vmitools',
